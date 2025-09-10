@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hannah's Portfolio</title>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      margin: 0;
+      padding: 30px;
+      background-color: #faf7fd;
+      color: #333;
+    }
+
+    .wrapper {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .bubble-name {
+      background: linear-gradient(135deg, #d8b4fe, #c084fc);
+      display: inline-block;
+      padding: 18px 30px;
+      border-radius: 50px;
+      font-size: 36px;
+      font-weight: 600;
+      color: white;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: #6a4fbf;
+      margin-top: 8px;
+      font-weight: 400;
+    }
+
+    section h2 {
+      text-align: center;
+      color: #5e3a99;
+      margin-bottom: 20px;
+      font-size: 26px;
+    }
+
+    /* About */
+    #about p {
+      max-width: 650px;
+      margin: 0 auto 30px;
+      line-height: 1.6;
+      text-align: center;
+      color: #444;
+    }
+
+    .photo-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin-bottom: 20px;
+    }
+
+    .photo-row img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #e6ccff;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.12);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .photo-row img:hover {
+      transform: scale(1.08);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.2);
+    }
+
+    /* Projects */
+    .scrollable-projects {
+      max-height: 220px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin: 0 auto;
+      border: 2px solid #e6ccff;
+      border-radius: 12px;
+      background-color: #fdfaff;
+      padding: 12px;
+      width: 80%;
+    }
+
+    .scrollable-projects button {
+      background: #e6ccff;
+      border: none;
+      border-radius: 10px;
+      padding: 10px 16px;
+      font-size: 15px;
+      color: #4a148c;
+      cursor: pointer;
+      text-align: left;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .scrollable-projects button:hover {
+      background-color: #d1b3ff;
+      transform: translateY(-2px);
+    }
+
+    .scrollable-projects::-webkit-scrollbar {
+      width: 6px;
+    }
+    .scrollable-projects::-webkit-scrollbar-thumb {
+      background: #c5a3ff;
+      border-radius: 3px;
+    }
+
+    /* Resume Section */
+    #resume {
+      text-align: center;
+      padding: 40px 20px;
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      margin: 40px auto;
+      max-width: 750px;
+    }
+
+    #resume p {
+      font-size: 16px;
+      color: #444;
+      max-width: 600px;
+      margin: 0 auto 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      transition: transform 0.2s, background 0.3s;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-resume {
+      background-color: #7e57c2;
+      color: white;
+    }
+
+    .btn-linkedin {
+      background-color: #0077b5;
+      color: white;
+    }
+
+    /* Contact */
+    #contact {
+      text-align: center;
+      margin: 50px auto;
+      max-width: 600px;
+    }
+
+    #contact a {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      border-radius: 8px;
+      color: white;
+      text-decoration: none;
+      width: fit-content;
+    }
+
+    #contact a:first-of-type {
+      background: #7E57C2;
+    }
+    #contact a:last-of-type {
+      background: #6a0dad;
+    }
+
+    /* Modal */
+    #projectModal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      z-index: 1000;
+      overflow: auto;
+    }
+
+    #projectModal .modal-content {
+      background: white;
+      max-width: 600px;
+      margin: 60px auto;
+      padding: 25px;
+      border-radius: 10px;
+      color: #333;
+      position: relative;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+
+    #projectModal button.close-btn {
+      position: absolute;
+      top: 12px; right: 12px;
+      font-size: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #666;
+    }
+
+    #projectModal a {
+      color: #7e57c2;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="bubble-name">Hannah Vosteen</div>
+    <p class="subtitle">Creative coder & Computer Science student</p>
+  </header>
+
+  <section id="about">
+    <div class="photo-row">
+      <a href="https://raw.githubusercontent.com/Tailsteen/c-Project/main/cacc1.jpg" target="_blank">
+        <img src="https://raw.githubusercontent.com/Tailsteen/c-Project/main/cacc1.jpg" alt="CACC Photo" />
+      </a>
+      <a href="https://raw.githubusercontent.com/Tailsteen/c-Project/main/thompson1.jpg" target="_blank">
+        <img src="https://raw.githubusercontent.com/Tailsteen/c-Project/main/thompson1.jpg" alt="Thompson Photo" />
+      </a>
+      <a href="https://raw.githubusercontent.com/Tailsteen/c-Project/main/auburn1.jpg" target="_blank">
+        <img src="https://raw.githubusercontent.com/Tailsteen/c-Project/main/auburn1.jpg" alt="Auburn Photo" />
+      </a>
+    </div>
+
+    <p>
+      I am Hannah, currently studying Computer Science at Auburn University. I love building interactive websites, games, and creative projects that combine technology and art. Outside of coding, I enjoy exploring nature and trying new hobbies.
+    </p>
+  </section>
+
+  <section>
+    <h2>My Projects</h2>
+    <div class="scrollable-projects">
+      <button onclick="showProject('dataAnalyzer')">📊 Data Analyzer</button>
+      <button onclick="showProject('project1')">💰 Loan Payment</button>
+      <button onclick="showProject('assemblypro1')">⚙️ Assembly Project</button>
+    </div>
+  </section>
+
+  <section id="resume">
+    <h2>My Resume</h2>
+    <p>
+      Interested in my professional background? Download my resume to learn more about my education, experience, and technical projects.
+    </p>
+    <a class="btn btn-resume" href="https://raw.githubusercontent.com/Tailsteen/c-Project/main/Resume-_%20Hannah%20Vosteen.docx%20(4).pdf" target="_blank">📄 View My Resume</a>
+    <a class="btn btn-linkedin" href="https://www.linkedin.com/in/hannah-vosteen" target="_blank">🔗 Connect on LinkedIn</a>
+  </section>
+
+  <section id="contact">
+    <h2>Contact Me</h2>
+    <p>Here are my two emails if you’d like to get in touch:</p>
+    <a href="mailto:hannah.vosteen@gmail.com">Personal Email: hannah.vosteen@gmail.com</a>
+    <a href="mailto:hev0011e@auburn.edu">Auburn Email: hev0011@auburn.edu</a>
+  </section>
+
+  <!-- Modal -->
+  <div id="projectModal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeProject()">✖</button>
+      <h3 id="modalTitle"></h3>
+      <p id="modalDescription"></p>
+      <p><a id="modalLink" href="#" target="_blank">View Project</a></p>
+    </div>
+  </div>
+
+  <script>
+    const projects = {
+      dataAnalyzer: {
+        title: "Data Analyzer",
+        description: "A C++ project showcasing my ability to analyze and process datasets. Includes multiple files with detailed functionality.",
+        link: "https://github.com/Tailsteen/c-Project/blob/main/Project4_hev0011_Hannah_Vosteen.cpp"
+      },
+      project1: {
+        title: "Loan Payment",
+        description: "My first software construction project in C++, calculating loan payoff timelines based on input parameters.",
+        link: "https://github.com/Tailsteen/c-Project/blob/main/project1_hev0011_Hannah_Vosteen.cpp"
+      },
+      assemblypro1: {
+        title: "Assembly Project",
+        description: "A final project demonstrating my skills in Assembly language programming and optimization.",
+        link: "https://github.com/Tailsteen/c-Project/blob/main/assembly%20final%20project"
+      }
+    };
+
+    function showProject(id) {
+      const project = projects[id];
+      if (!project) return;
+      document.getElementById('modalTitle').textContent = project.title;
+      document.getElementById('modalDescription').textContent = project.description;
+      document.getElementById('modalLink').href = project.link;
+      document.getElementById('projectModal').style.display = 'block';
+    }
+
+    function closeProject() {
+      document.getElementById('projectModal').style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>
